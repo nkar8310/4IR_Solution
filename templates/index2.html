@@ -1,0 +1,47 @@
+<!-- this one for xg -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Dashboard</title>
+    <style>
+        .plot-container {
+            float: left;
+            width: 70%;
+        }
+
+        .export-container {
+            float: right;
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Flask Dashboard</h1>
+
+    <form method="post" enctype="multipart/form-data" action="{{ url_for('xg.upload_file') }}">
+        <input type="file" name="file" accept=".csv">
+        <input type="submit" value="Upload">
+    </form>
+
+    {% if error %}
+    <p>Error: {{ error }}</p>
+    {% endif %}
+
+    {% if plot_exists %}
+    <div class="plot-container">
+        <h2>Prediction Plot:XGBoost</h2>
+        <img src="{{ url_for('static', filename='prediction_xgplot.png') }}" alt="Prediction Plot">
+    </div>
+    <div class="export-container">
+        <h2>Export Prediction Data:</h2>
+        <form method="get" action="{{ url_for('xg.export') }}">
+            <label for="document_name">Enter Document Name:</label>
+            <input type="text" id="document_name" name="document_name">
+            <button type="submit">Export</button>
+        </form>
+    </div>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Model</title>
+    <style>
+        body {
+            background-image: url('/static/bg.jpg'); /* Adjust the path to your image */
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-top: 100px;
+        }
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff; /* Blue background color, you can change it */
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker blue color on hover, you can change it */
+        }
+    </style>
+</head>
+<body>
+    <h1>Choose Model</h1>
+
+    <form action="/xgboost" method="GET">
+        <button type="submit">XGBoost</button>
+    </form>
+
+    <form action="/prophet" method="GET">
+        <button type="submit">Prophet</button>
+    </form>
+</body>
+</html>

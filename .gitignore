@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local configuration file (VS Code specific)
+.vscode/
+
+# Environment directory
+env/
+
+# Dependency directories
+venv/
+env/
+
+# Python distribution / packaging
+*.egg-info/
+dist/
+build/

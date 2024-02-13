@@ -167,7 +167,9 @@ def upload_file():
                 plot_path = 'static/prediction_xgplot.png'
                 plt.savefig(plot_path)
                 plt.close()
-
+                prediction_df = pd.DataFrame({'Date': future_data['Date'], 'Employee Count': future_prediction})
+                prediction_csv_path = 'xgprediction.csv'
+                prediction_df.to_csv(prediction_csv_path, index=False)                
                 return render_template('index2.html', plot_exists=True, plot_path=plot_path)
             except Exception as e:
                 return render_template('index2.html', error=str(e))

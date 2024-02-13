@@ -52,6 +52,7 @@ def upload_file():
             plt.title('Actual vs Predicted Employee Count in Dec 2023')
             plt.legend()
             plt.savefig('static/prediction_fbplot.png')
+            prediction.to_csv('fbprediction.csv')
             return render_template('index.html', error=None, plot_exists=True)
         except Exception as e:
             return render_template('index.html', error=str(e))

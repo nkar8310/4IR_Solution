@@ -1,6 +1,7 @@
 <!-- this one for xg -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
         .plot-container {
             float: left;
             width: 70%;
+ 
         }
 
         .export-container {
@@ -17,8 +19,9 @@
         }
     </style>
 </head>
+
 <body>
-    <h1>Welcome to the Flask Dashboard</h1>
+    <h1>Welcome to the XGBoost Dashboard</h1>
 
     <form method="post" enctype="multipart/form-data" action="{{ url_for('xg.upload_file') }}">
         <input type="file" name="file" accept=".csv">
@@ -44,4 +47,5 @@
     </div>
     {% endif %}
 </body>
+
 </html>

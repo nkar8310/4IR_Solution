@@ -6,6 +6,7 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 import os
 import joblib
+from datetime import datetime, timedelta
 
 # Create a blueprint
 xg_blueprint = Blueprint('xg', __name__)
@@ -13,6 +14,7 @@ xg_blueprint = Blueprint('xg', __name__)
 # Define the global variables for model and X_test
 model = None
 X_test = None
+
 
 @xg_blueprint.route('/xgboost')
 def index():
@@ -59,7 +61,7 @@ def upload_file():
                 future_prediction = model.predict(future)
 
                 # Plotting
-                plt.figure(figsize=(18, 6))
+                plt.figure(figsize=(12, 6))
                 plt.plot(df.index, df['employee_count'].to_list(), label='Actual', marker='o')
                 plt.plot(X_test.index, predictions, label='Valid', marker='o')
                 plt.plot(future_data['Date'], future_prediction, label='Future', marker='o')
@@ -72,10 +74,16 @@ def upload_file():
                 plot_path = 'static/prediction_xgplot.png'
                 plt.savefig(plot_path)
                 plt.close()
-                prediction_df = pd.DataFrame({'Date': future_data['Date'], 'Employee Count': future_prediction})
+                prediction_df = pd.DataFrame({'Date': future_data['Date'], 'Employee Count': future_prediction.round()})
                 prediction_csv_path = 'xgprediction.csv'
-                prediction_df.to_csv(prediction_csv_path, index=False)                
-                return render_template('index2.html', plot_exists=True, plot_path=plot_path)
+                prediction_df.to_csv(prediction_csv_path, index=False)   
+
+                # Filter future predicted January data
+                future_predicted_january_data = prediction_df[prediction_df['Date'].dt.month == 2]
+                future_predicted_january_employee_count = future_predicted_january_data.set_index('Date')['Employee Count'].to_dict()
+
+                tomorrow = datetime.now() + timedelta(days=1)
+                return render_template('index2.html', plot_exists=True, plot_path=plot_path, future_predicted_january_employee_count=future_predicted_january_employee_count, tomorrow=tomorrow)
             except Exception as e:
                 return render_template('index2.html', error=str(e))
     return redirect(url_for('xg.index'))
@@ -99,3 +107,5 @@ def export():
     return redirect(url_for('xg.index'))
 
 
+if __name__ == "__main__":
+    app.run(debug=True)
